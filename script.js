@@ -1,6 +1,6 @@
 // Import quotes and songs from external files
 import { motivationalQuotes } from './assets/motivational-quotes.js';
-import { generalQuotes } from './assets/general-quotes.js';
+import { memes } from './assets/memes.js';
 import { songs } from './assets/songs.js';
 
 // Function to generate a consistent "today" key
@@ -9,33 +9,22 @@ function getTodayKey() {
   return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 }
 
+// Function to calculate the quote index based on the current day
+function getQuoteIndex(quoteType) {
+  const totalQuotes = quoteType === "motivational" ? motivationalQuotes.length : memes.length;
+  const currentDate = new Date();
+  const startOfYear = new Date(currentDate.getFullYear(), 0, 1); // January 1st of the current year
+  const dayOfYear = Math.floor((currentDate - startOfYear) / (24 * 60 * 60 * 1000)); // Day of the year
+
+  return dayOfYear % totalQuotes; // Cycle through quotes every day
+}
+
 // Fetch and display the daily quote
 function fetchQuote(quoteType) {
-  const todayKey = getTodayKey();
-  const storedKey = localStorage.getItem("lastQuoteKey");
-  let recentQuotes = JSON.parse(localStorage.getItem("recentQuotes")) || [];
+  const quotes = quoteType === "motivational" ? motivationalQuotes : memes;
+  const quoteIndex = getQuoteIndex(quoteType);
 
-  // Determine the quote pool based on user choice
-  const quotes = quoteType === "motivational" ? motivationalQuotes : generalQuotes;
-
-  if (storedKey === todayKey && localStorage.getItem("quoteType") === quoteType) {
-    const quoteIndex = parseInt(localStorage.getItem("quoteIndex"));
-    document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
-  } else {
-    const availableQuotes = quotes.filter((_, index) => !recentQuotes.includes(index));
-    if (availableQuotes.length === 0) recentQuotes = [];
-    const randomIndex = Math.floor(Math.random() * availableQuotes.length);
-    const quoteIndex = quotes.indexOf(availableQuotes[randomIndex]);
-
-    // Update localStorage
-    localStorage.setItem("lastQuoteKey", todayKey);
-    localStorage.setItem("quoteIndex", quoteIndex);
-    localStorage.setItem("quoteType", quoteType);
-    recentQuotes.push(quoteIndex);
-    localStorage.setItem("recentQuotes", JSON.stringify(recentQuotes));
-
-    document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
-  }
+  document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
 }
 
 // Fetch and display the "Song of the Day"
@@ -85,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchQuote("motivational");
   });
 
-  document.getElementById("general-quote-btn").addEventListener("click", () => {
-    fetchQuote("general");
+  document.getElementById("meme-btn").addEventListener("click", () => {
+    fetchQuote("meme");
   });
 
   // Load the song of the day
