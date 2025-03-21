@@ -1,89 +1,27 @@
-// Import quotes and songs from external files
+// Import quotes from external file
 import { quotes } from './assets/quotes.js';
-import { songs } from './assets/songs.js';
 
-// Function to generate a consistent "today" key
-function getTodayKey() {
-  const today = new Date();
-  return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-}
-
-// Fetch and display the daily quote
+// Function to fetch and display a random quote
 function fetchQuote() {
-    console.log("Fetching quote...");
-    const todayKey = getTodayKey();
-    const storedKey = localStorage.getItem("lastQuoteKey");
-    let recentQuotes = JSON.parse(localStorage.getItem("recentQuotes")) || [];
-  
-    if (storedKey === todayKey) {
-      const quoteIndex = parseInt(localStorage.getItem("quoteIndex"));
-      console.log(`Displaying cached quote: ${quotes[quoteIndex]}`);
-      document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
-    } else {
-      const availableQuotes = quotes.filter((_, index) => !recentQuotes.includes(index));
-      if (availableQuotes.length === 0) recentQuotes = [];
-      const randomIndex = Math.floor(Math.random() * availableQuotes.length);
-      const quoteIndex = quotes.indexOf(availableQuotes[randomIndex]);
-      localStorage.setItem("lastQuoteKey", todayKey);
-      localStorage.setItem("quoteIndex", quoteIndex);
-      recentQuotes.push(quoteIndex);
-      localStorage.setItem("recentQuotes", JSON.stringify(recentQuotes));
-      console.log(`Displaying new quote: ${quotes[quoteIndex]}`);
-      document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
-    }
+  console.log("Quotes array:", quotes); // Debugging: Check if quotes are imported correctly
+
+  if (!quotes || quotes.length === 0) {
+    console.error("Quotes array is empty or undefined.");
+    document.getElementById("quote").textContent = "Error: Quotes not loaded.";
+    return;
   }
 
-// Fetch and display the "Song of the Day"
-function fetchSong() {
-  const todayKey = getTodayKey();
-  const storedKey = localStorage.getItem("lastSongKey");
-  const recentSongs = JSON.parse(localStorage.getItem("recentSongs")) || [];
-  const currentDate = new Date();
+  // Select a random quote
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  const selectedQuote = quotes[randomIndex];
 
-  if (storedKey === todayKey) {
-    const songIndex = parseInt(localStorage.getItem("songIndex"));
-    displaySong(songs[songIndex]);
-  } else {
-    const availableSongs = songs.filter(song => {
-      const lastSelected = recentSongs.find(rs => rs.name === song.name);
-      if (!lastSelected) return true;
-      const lastSelectedDate = new Date(lastSelected.date);
-      const cooldownPeriod = 90 * 24 * 60 * 60 * 1000; // 90 days in milliseconds
-      return currentDate - lastSelectedDate > cooldownPeriod;
-    });
+  console.log("Selected quote:", selectedQuote); // Debugging: Check the selected quote
 
-    if (availableSongs.length === 0) {
-      console.log("All songs on cooldown. Resetting...");
-      localStorage.removeItem("recentSongs");
-      return fetchSong();
-    }
-
-    const randomSong = availableSongs[Math.floor(Math.random() * availableSongs.length)];
-    const updatedRecentSongs = recentSongs.filter(rs => rs.name !== randomSong.name);
-    updatedRecentSongs.push({ name: randomSong.name, date: currentDate.toISOString() });
-    localStorage.setItem("lastSongKey", todayKey);
-    localStorage.setItem("songIndex", songs.indexOf(randomSong));
-    localStorage.setItem("recentSongs", JSON.stringify(updatedRecentSongs));
-    displaySong(randomSong);
-  }
+  // Display the quote
+  document.getElementById("quote").textContent = `"${selectedQuote}"`;
 }
 
-// Display the selected song
-function displaySong(song) {
-  document.getElementById("song-name").textContent = `"${song.name}"`;
-  document.getElementById("song-artist").textContent = `by ${song.artist}`;
-}
-
-// Dice Roll Functionality
-document.getElementById("roll-dice").addEventListener("click", () => {
-  const diceResult = Math.floor(Math.random() * 6) + 1; // Random number between 1 and 6
-  document.getElementById("dice-result").textContent = `You rolled a ${diceResult}!`;
-});
-
-// Load everything after the DOM is ready
+// Load the quote after the DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
-  requestAnimationFrame(() => {
-    fetchQuote();
-    fetchSong();
-  });
+  fetchQuote();
 });
