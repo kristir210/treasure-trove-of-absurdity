@@ -10,25 +10,28 @@ function getTodayKey() {
 
 // Fetch and display the daily quote
 function fetchQuote() {
-  const todayKey = getTodayKey();
-  const storedKey = localStorage.getItem("lastQuoteKey");
-  let recentQuotes = JSON.parse(localStorage.getItem("recentQuotes")) || [];
-
-  if (storedKey === todayKey) {
-    const quoteIndex = parseInt(localStorage.getItem("quoteIndex"));
-    document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
-  } else {
-    const availableQuotes = quotes.filter((_, index) => !recentQuotes.includes(index));
-    if (availableQuotes.length === 0) recentQuotes = [];
-    const randomIndex = Math.floor(Math.random() * availableQuotes.length);
-    const quoteIndex = quotes.indexOf(availableQuotes[randomIndex]);
-    localStorage.setItem("lastQuoteKey", todayKey);
-    localStorage.setItem("quoteIndex", quoteIndex);
-    recentQuotes.push(quoteIndex);
-    localStorage.setItem("recentQuotes", JSON.stringify(recentQuotes));
-    document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
+    console.log("Fetching quote...");
+    const todayKey = getTodayKey();
+    const storedKey = localStorage.getItem("lastQuoteKey");
+    let recentQuotes = JSON.parse(localStorage.getItem("recentQuotes")) || [];
+  
+    if (storedKey === todayKey) {
+      const quoteIndex = parseInt(localStorage.getItem("quoteIndex"));
+      console.log(`Displaying cached quote: ${quotes[quoteIndex]}`);
+      document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
+    } else {
+      const availableQuotes = quotes.filter((_, index) => !recentQuotes.includes(index));
+      if (availableQuotes.length === 0) recentQuotes = [];
+      const randomIndex = Math.floor(Math.random() * availableQuotes.length);
+      const quoteIndex = quotes.indexOf(availableQuotes[randomIndex]);
+      localStorage.setItem("lastQuoteKey", todayKey);
+      localStorage.setItem("quoteIndex", quoteIndex);
+      recentQuotes.push(quoteIndex);
+      localStorage.setItem("recentQuotes", JSON.stringify(recentQuotes));
+      console.log(`Displaying new quote: ${quotes[quoteIndex]}`);
+      document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
+    }
   }
-}
 
 // Fetch and display the "Song of the Day"
 function fetchSong() {
