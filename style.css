@@ -23,6 +23,12 @@ body {
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Subtle white glow */
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 20px;
+  }
 }
 
 /* Headings */
@@ -109,6 +115,6 @@ button:active {
 /* Dice Roll Message */
 #dice-message {
   font-style: italic;
-  color: #ff4500; /* Bright orange */
+  color: #ff4500; /* Bright orange text */
   margin-top: 10px;
 }
