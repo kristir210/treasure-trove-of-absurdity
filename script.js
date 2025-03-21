@@ -15,11 +15,9 @@ function fetchQuote() {
   let recentQuotes = JSON.parse(localStorage.getItem("recentQuotes")) || [];
 
   if (storedKey === todayKey) {
-    // If today's quote has already been fetched, display it
     const quoteIndex = parseInt(localStorage.getItem("quoteIndex"));
     document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
   } else {
-    // Filter out quotes that have been used in the last 50 days
     const availableQuotes = quotes.filter((_, index) => !recentQuotes.includes(index));
     if (availableQuotes.length === 0) recentQuotes = [];
     const randomIndex = Math.floor(Math.random() * availableQuotes.length);
@@ -72,6 +70,12 @@ function displaySong(song) {
   document.getElementById("song-name").textContent = `"${song.name}"`;
   document.getElementById("song-artist").textContent = `by ${song.artist}`;
 }
+
+// Dice Roll Functionality
+document.getElementById("roll-dice").addEventListener("click", () => {
+  const diceResult = Math.floor(Math.random() * 6) + 1; // Random number between 1 and 6
+  document.getElementById("dice-result").textContent = `You rolled a ${diceResult}!`;
+});
 
 // Load everything after the DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
