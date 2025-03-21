@@ -1,7 +1,8 @@
-// Import quotes and songs from external files
+// Import quotes, songs, and dice roll functionality
 import { motivationalQuotes } from './assets/motivational-quotes.js';
 import { memes } from './assets/memes.js';
 import { songs } from './assets/songs.js';
+import { rollDice } from './dice-roll.js';
 
 // Function to generate a consistent "today" key
 function getTodayKey() {
@@ -69,7 +70,7 @@ function displaySong(song) {
   document.getElementById("song-artist").textContent = `by ${song.artist}`;
 }
 
-// Add event listeners for quote buttons
+// Add event listeners for quote buttons and dice roll
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("motivational-quote-btn").addEventListener("click", () => {
     fetchQuote("motivational");
@@ -83,4 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(() => {
     fetchSong();
   });
+
+  // Add dice roll event listener
+  document.getElementById("roll-dice").addEventListener("click", rollDice);
 });
