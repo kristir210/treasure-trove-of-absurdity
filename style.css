@@ -1,90 +1,116 @@
 /* Basic Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body Styling */
-  body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
-  }
-  
-  /* Container Styling */
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  /* Headings */
-  h1 {
-    font-family: 'Bilbo Swash Caps', cursive;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #34495e;
-  }
-  
-  /* Content Styling */
-  #quote,
-  #song-name,
-  #song-artist {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #7f8c8d;
-  }
-  
-  /* Hover Effects for Fun */
-  #quote:hover,
-  #song-name:hover,
-  #song-artist:hover {
-    color: #2980b9;
-    transition: color 0.3s ease;
-  }
-  
-  /* Loading Placeholder Animation */
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-  
-  .loading {
-    animation: blink 1.5s infinite;
-  }
-  
-  /* Dice Roll Styling */
-  #dice-container {
-    margin-top: 30px;
-  }
-  
-  #roll-dice {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  #roll-dice:hover {
-    background-color: #3498db;
-  }
-  
-  #dice-result {
-    font-size: 1.2rem;
-    margin-top: 10px;
-    color: #2c3e50;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Container Styling */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8); /* Slightly transparent black overlay */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Subtle white glow */
+}
+
+/* Headings */
+h1 {
+  font-family: 'Bilbo Swash Caps', cursive;
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #ff4500; /* Bright orange for contrast */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #00ffff; /* Cyan for contrast */
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 2px;
+  background-color: #00ffff; /* Cyan underline */
+  margin: 5px auto 15px;
+}
+
+/* Buttons */
+button {
+  background-color: #ff4500; /* Bright orange */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+button:hover {
+  background-color: #ff6347; /* Tomato red */
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Quote and Song Styling */
+#quote,
+#song-name,
+#song-artist {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #00ffff; /* Cyan text */
+  font-style: italic;
+}
+
+/* Remove Loading Animation */
+.loading {
+  opacity: 1; /* Ensure no blinking or fading */
+}
+
+/* Dice Roll Styling */
+#dice-container {
+  margin-top: 30px;
+}
+
+#roll-dice {
+  background-color: #ff4500; /* Bright orange */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#roll-dice:hover {
+  background-color: #ff6347; /* Tomato red */
+  transform: scale(1.05);
+}
+
+#dice-result {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #00ffff; /* Cyan text */
+}

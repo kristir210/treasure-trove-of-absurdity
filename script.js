@@ -24,6 +24,7 @@ function fetchQuote(quoteType) {
   const quotes = quoteType === "motivational" ? motivationalQuotes : memes;
   const quoteIndex = getQuoteIndex(quoteType);
 
+  // Replace loading text immediately
   document.getElementById("quote").textContent = `"${quotes[quoteIndex]}"`;
 }
 
